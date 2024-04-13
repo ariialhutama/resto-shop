@@ -24,5 +24,11 @@
                         Controller</span></a>
             </li>
 
+            <li class="menu-header">Management Produk</li>
+            <li class='{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}'>
+
+                <a href="{{ route('product.index') }}" class="nav-link"><i
+                        class="fas fa-water"></i><span>Product</span></a>
+            </li>
     </aside>
 </div>

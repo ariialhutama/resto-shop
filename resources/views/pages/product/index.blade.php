@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Posts')
+@section('title', 'Management System')
 
 @push('style')
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 @endpush
-
+{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 @section('main')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Posts</h1>
-                <div class="section-header-button">
+                <h1>Management Product</h1>
+                {{-- <div class="section-header-button">
                     <a href="features-post-create.html" class="btn btn-primary">Add New</a>
-                </div>
+                </div> --}}
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Posts</a></div>
@@ -22,11 +22,6 @@
                 </div>
             </div>
             <div class="section-body">
-                <h2 class="section-title">Posts</h2>
-                <p class="section-lead">
-                    You can manage all posts, such as editing, deleting and more.
-                </p>
-
                 <div class="row">
                     <div class="col-12">
                         <div class="card mb-0">
@@ -57,7 +52,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>All Posts</h4>
+                                <h4>Management Product</h4>
+                                <div class="card-header-action">
+                                    <a href="{{ route('product.create') }}" class="btn btn-icon btn-left btn-primary"><i
+                                            class="far fa-edit"></i> Add
+                                        New</a>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="float-left">
@@ -69,9 +69,10 @@
                                     </select>
                                 </div>
                                 <div class="float-right">
-                                    <form>
+
+                                    <form method="GET" action="{{ route('product.index') }}">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search">
+                                            <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                             </div>
@@ -84,226 +85,148 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-                                            <th class="pt-2 text-center">
+                                            {{-- <th class="pt-2 text-center">
                                                 <div class="custom-checkbox custom-checkbox-table custom-control">
                                                     <input type="checkbox" data-checkboxes="mygroup"
                                                         data-checkbox-role="dad" class="custom-control-input"
                                                         id="checkbox-all">
                                                     <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                 </div>
-                                            </th>
-                                            <th>Title</th>
-                                            <th>Category</th>
-                                            <th>Author</th>
-                                            <th>Created At</th>
+                                            </th> --}}
+                                            <th>Nama</th>
+                                            <th>Kategori</th>
+                                            {{-- <th>Deskripsi</th> --}}
+                                            <th>Harga</th>
+                                            <th>Stok</th>
                                             <th>Status</th>
+                                            <th>Gambar</th>
+                                            <th>Created At</th>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" data-checkboxes="mygroup"
-                                                        class="custom-control-input" id="checkbox-2">
-                                                    <label for="checkbox-2" class="custom-control-label">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td>Laravel 5 Tutorial: Introduction
-                                                <div class="table-links">
-                                                    <a href="#">View</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#">Edit</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#" class="text-danger">Trash</a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#">Web Developer</a>,
-                                                <a href="#">Tutorial</a>
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <img alt="image" src="{{ asset('img/avatar/avatar-5.png') }}"
-                                                        class="rounded-circle" width="35" data-toggle="title"
-                                                        title="">
-                                                    <div class="d-inline-block ml-1">Rizal Fakhri</div>
-                                                </a>
-                                            </td>
-                                            <td>2018-01-20</td>
-                                            <td>
-                                                <div class="badge badge-primary">Published</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" data-checkboxes="mygroup"
-                                                        class="custom-control-input" id="checkbox-3">
-                                                    <label for="checkbox-3" class="custom-control-label">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td>Laravel 5 Tutorial: Installing
-                                                <div class="table-links">
-                                                    <a href="#">View</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#">Edit</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#" class="text-danger">Trash</a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#">Web Developer</a>,
-                                                <a href="#">Tutorial</a>
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <img alt="image" src="{{ asset('img/avatar/avatar-5.png') }}"
-                                                        class="rounded-circle" width="35" data-toggle="title"
-                                                        title="">
-                                                    <div class="d-inline-block ml-1">Rizal Fakhri</div>
-                                                </a>
-                                            </td>
-                                            <td>2018-01-20</td>
-                                            <td>
-                                                <div class="badge badge-primary">Published</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" data-checkboxes="mygroup"
-                                                        class="custom-control-input" id="checkbox-4">
-                                                    <label for="checkbox-4" class="custom-control-label">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td>Laravel 5 Tutorial: MVC
-                                                <div class="table-links">
-                                                    <a href="#">View</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#">Edit</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#" class="text-danger">Trash</a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#">Web Developer</a>,
-                                                <a href="#">Tutorial</a>
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <img alt="image" src="{{ asset('img/avatar/avatar-5.png') }}"
-                                                        class="rounded-circle" width="35" data-toggle="title"
-                                                        title="">
-                                                    <div class="d-inline-block ml-1">Rizal Fakhri</div>
-                                                </a>
-                                            </td>
-                                            <td>2018-01-20</td>
-                                            <td>
-                                                <div class="badge badge-primary">Published</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" data-checkboxes="mygroup"
-                                                        class="custom-control-input" id="checkbox-5">
-                                                    <label for="checkbox-5" class="custom-control-label">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td>Laravel 5 Tutorial: CRUD
-                                                <div class="table-links">
-                                                    <a href="#">View</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#">Edit</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#" class="text-danger">Trash</a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#">Web Developer</a>,
-                                                <a href="#">Tutorial</a>
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <img alt="image" src="{{ asset('img/avatar/avatar-5.png') }}"
-                                                        class="rounded-circle" width="35" data-toggle="title"
-                                                        title="">
-                                                    <div class="d-inline-block ml-1">Rizal Fakhri</div>
-                                                </a>
-                                            </td>
-                                            <td>2018-01-20</td>
-                                            <td>
-                                                <div class="badge badge-danger">Draft</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" data-checkboxes="mygroup"
-                                                        class="custom-control-input" id="checkbox-1">
-                                                    <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td>Laravel 5 Tutorial: Deployment
-                                                <div class="table-links">
-                                                    <a href="#">View</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#">Edit</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#" class="text-danger">Trash</a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#">Web Developer</a>,
-                                                <a href="#">Tutorial</a>
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <img alt="image" src="{{ asset('img/avatar/avatar-5.png') }}"
-                                                        class="rounded-circle" width="35" data-toggle="title"
-                                                        title="">
-                                                    <div class="d-inline-block ml-1">Rizal Fakhri</div>
-                                                </a>
-                                            </td>
-                                            <td>2018-01-20</td>
-                                            <td>
-                                                <div class="badge badge-warning">Pending</div>
-                                            </td>
-                                        </tr>
+
+                                        @foreach ($products as $product)
+                                            <tr>
+                                                {{-- <td>
+                                                    <div class="custom-checkbox custom-control">
+                                                        <input type="checkbox" data-checkboxes="mygroup"
+                                                            class="custom-control-input" id="checkbox-1">
+                                                        <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                    </div>
+                                                </td> --}}
+                                                <td>{{ $product->name }}
+                                                    <div class="table-links">
+                                                        <a href="#">View</a>
+                                                        <div class="bullet"></div>
+                                                        <a href="{{ route('product.edit', $product->id) }}">Edit</a>
+                                                        <div class="bullet"></div>
+                                                        <a href="" class="text-danger"
+                                                            onclick="event.preventDefault(); document.getElementById('delete-form').submit()">Trash</a>
+                                                        <form id="delete-form"
+                                                            action="{{ route('product.destroy', $product->id) }}"
+                                                            method="post" style="display: none">
+                                                            @method('delete')
+                                                            @csrf
+                                                        </form>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {{ $product->category->name }}
+                                                </td>
+                                                {{-- <td>
+                                                    {{ $product->description }}
+                                        </td> --}}
+                                                <td>
+                                                    {{ 'Rp. ' . number_format($product->price, 2, ',', '.') }}
+                                                </td>
+                                                <td>
+                                                    {{ $product->stock }}
+                                                </td>
+                                                <td>
+
+                                                    @if ($product->status == 1)
+                                                        <span class="badge badge-success">Active</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Inactive</span>
+                                                    @endif
+                                                    {{-- <div
+                                                        class="badge
+                                                            badge-warning">
+                                                        {{ $product->status == 1 ? 'AKCTIVE' : 'INACTIVE' }}
+                                                    </div> --}}
+                                                </td>
+                                                <td>
+                                                    <img src="{{ $product->image }}" width="100px" alt="">
+                                                </td>
+                                                <td>
+                                                    {{ $product->created_at }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    <nav>
-                                        <ul class="pagination">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="#" aria-label="Previous">
-                                                    <span aria-hidden="true">&laquo;</span>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#" aria-label="Next">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
+                                    {{ $products->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </section>
     </div>
+    {{-- <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+        integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script> --}}
+    {{-- Sweetalert Konfirmasi Delete --}}
+
+    {{-- <script type="text/javascript">
+        $('.delete').click(function() {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                }
+            });
+        });
+    </script> --}}
+
+    {{-- <script type="text/javascript">
+        $(function() {
+            $(document).on('click', '#delete-form', function(e) {
+                e.preventDefault();
+                var link = $(this).attr("href");
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+
+                    }
+                });
+            })
+        })
+    </script> --}}
 @endsection
 
 @push('scripts')
@@ -313,3 +236,4 @@
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/features-posts.js') }}"></script>
 @endpush
+{{-- @include('layouts.alert') --}}

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::paginate(5);
-        return view('pages.product.index', compact('products'));
+        $categories=Category::latest()->paginate(5);
+        return view('pages.category.index', compact('categories'));
     }
 
     /**
@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('pages.product.create');
+        //
     }
 
     /**

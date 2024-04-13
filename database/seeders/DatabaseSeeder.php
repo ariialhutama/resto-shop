@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(100)->create();
+        User::factory(15)->create();
 
         User::factory()->create([
             'name' => 'admin',
@@ -22,6 +23,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456'),
             'role' => 'admin',
             'phone' => '0895800975009',
+        ]);
+
+        $this->call([
+            CategorySeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }
