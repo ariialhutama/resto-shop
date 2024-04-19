@@ -85,14 +85,14 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-                                            <th class="pt-2 text-center">
+                                            {{-- <th class="pt-2 text-center">
                                                 <div class="custom-checkbox custom-checkbox-table custom-control">
                                                     <input type="checkbox" data-checkboxes="mygroup"
                                                         data-checkbox-role="dad" class="custom-control-input"
                                                         id="checkbox-all">
                                                     <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                 </div>
-                                            </th>
+                                            </th> --}}
                                             <th>Nama</th>
                                             <th>Email</th>
                                             <th>Role</th>
@@ -101,27 +101,34 @@
 
                                         @foreach ($users as $user)
                                             <tr>
-                                                <td>
+                                                {{-- <td>
                                                     <div class="custom-checkbox custom-control">
                                                         <input type="checkbox" data-checkboxes="mygroup"
                                                             class="custom-control-input" id="checkbox-1">
                                                         <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                                                     </div>
-                                                </td>
+                                                </td> --}}
                                                 <td>{{ $user->name }}
                                                     <div class="table-links">
-                                                        <a href="#">View</a>
-                                                        <div class="bullet"></div>
-                                                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                                                        <div class="bullet"></div>
-                                                        <a href="" class="text-danger"
-                                                            onclick="event.preventDefault(); document.getElementById('delete-form').submit()">Trash</a>
-                                                        <form id="delete-form"
+                                                        <form action="{{ route('user.destroy', $user->id) }}"
+                                                            method="post">
+                                                            @method('delete')
+                                                            @csrf
+                                                            <a href="#">View</a>
+                                                            <div class="bullet"></div>
+                                                            <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                                                            <div class="bullet"></div>
+                                                            <a href="" class="text-danger deleted"
+                                                                data-name="{{ $user->name }}">Trash</a>
+                                                        </form>
+                                                        {{-- <a href="" class="text-danger"
+                                                            onclick="event.preventDefault(); document.getElementById('delete-form').submit()">Trash</a> --}}
+                                                        {{-- <form id="delete-form"
                                                             action="{{ route('user.destroy', $user->id) }}" method="post"
                                                             style="display: none">
                                                             @method('delete')
                                                             @csrf
-                                                        </form>
+                                                        </form> --}}
 
                                                     </div>
                                                 </td>
@@ -151,6 +158,41 @@
 
         </section>
     </div>
+    {{-- Sweetalert --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+        integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    <script>
+        $('.deleted').click(function(event) {
+            var username = $(this).attr('data-name');
+            var form = $(this).closest('form')
+            event.preventDefault();
+            swal({
+                    title: 'Are you sure?',
+                    // text: 'Once deleted, you will not be able to recover this imaginary file!',
+                    text: 'Once deleted, you will not be able to recover this imaginary file! ' + username +
+                        ' ',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+
+                    if (willDelete) {
+                        form.submit();
+                        // window.location = '/user/' + userid + ''
+                        swal('Poof! Your imaginary file has been deleted!', {
+                            icon: 'success',
+                        });
+                    } else {
+                        swal('Your imaginary file is safe!');
+                    }
+                });
+        });
+    </script>
+
+
+
     {{-- <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
         integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script> --}}
     {{-- Sweetalert Konfirmasi Delete --}}

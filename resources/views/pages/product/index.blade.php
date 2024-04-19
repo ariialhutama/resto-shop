@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Management System')
+@section('title', 'Management Produk')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -55,17 +55,18 @@
                                 <h4>Management Product</h4>
                                 <div class="card-header-action">
                                     <a href="{{ route('product.create') }}" class="btn btn-icon btn-left btn-primary"><i
-                                            class="far fa-edit"></i> Add
+                                            class="far fa-edit" id="swal-6"></i> Add
                                         New</a>
+                                    {{-- <a href="#" class="btn btn-success deleted">Baronang</a> --}}
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="float-left">
                                     <select class="form-control selectric">
-                                        <option>Action For Selected</option>
-                                        <option>Move to Draft</option>
-                                        <option>Move to Pending</option>
-                                        <option>Delete Pemanently</option>
+                                        <option>Pilih Kategori</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="float-right">
@@ -93,6 +94,7 @@
                                                     <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                 </div>
                                             </th> --}}
+                                            <th>No</th>
                                             <th>Nama</th>
                                             <th>Kategori</th>
                                             {{-- <th>Deskripsi</th> --}}
@@ -100,10 +102,10 @@
                                             <th>Stok</th>
                                             <th>Status</th>
                                             <th>Gambar</th>
-                                            <th>Created At</th>
+                                            {{-- <th>Created At</th> --}}
                                         </tr>
 
-                                        @foreach ($products as $product)
+                                        @forelse ($products as $index => $product)
                                             <tr>
                                                 {{-- <td>
                                                     <div class="custom-checkbox custom-control">
@@ -112,19 +114,21 @@
                                                         <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                                                     </div>
                                                 </td> --}}
+                                                <td>{{ $index + $loop->iteration }}</td>
                                                 <td>{{ $product->name }}
                                                     <div class="table-links">
-                                                        <a href="#">View</a>
-                                                        <div class="bullet"></div>
-                                                        <a href="{{ route('product.edit', $product->id) }}">Edit</a>
-                                                        <div class="bullet"></div>
-                                                        <a href="" class="text-danger"
-                                                            onclick="event.preventDefault(); document.getElementById('delete-form').submit()">Trash</a>
-                                                        <form id="delete-form"
-                                                            action="{{ route('product.destroy', $product->id) }}"
-                                                            method="post" style="display: none">
+                                                        <form action="{{ route('product.destroy', $product->id) }}"
+                                                            method="post">
                                                             @method('delete')
                                                             @csrf
+                                                            <a href="#">View</a>
+                                                            <div class="bullet"></div>
+                                                            <a href="{{ route('product.edit', $product->id) }}">Edit</a>
+                                                            <div class="bullet"></div>
+                                                            {{-- <a href="" class="text-danger"
+                                                            onclick="event.preventDefault(); document.getElementById('delete-form').submit()">Trash</a> --}}
+                                                            <a href="#" class="text-danger deleted"
+                                                                data-name="{{ $product->name }}">Trash</a>
                                                         </form>
 
                                                     </div>
@@ -155,13 +159,26 @@
                                                     </div> --}}
                                                 </td>
                                                 <td>
-                                                    <img src="{{ $product->image }}" width="100px" alt="">
+                                                    @if ($product->image)
+                                                        <img class="mb-3 mt-3"
+                                                            src="{{ asset('storage/products/' . $product->image) }}"
+                                                            width="150px" alt="">
+                                                    @else
+                                                        <img class="mb-3 mt-3"
+                                                            src="{{ asset('storage/dafault/dafault.jpg') }}" width="150px"
+                                                            alt="{{ $product->name }}">
+                                                    @endif
+
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     {{ $product->created_at }}
-                                                </td>
+                                                </td> --}}
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <div class="alert alert-danger">
+                                                Data Produk belum tersedia
+                                            </div>
+                                        @endforelse
                                     </table>
                                 </div>
                                 <div class="float-right">
@@ -173,8 +190,44 @@
                 </div>
             </div>
 
+
         </section>
     </div>
+
+    {{-- Sweetalert --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+        integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    <script>
+        $('.deleted').click(function(event) {
+            var username = $(this).attr('data-name');
+            var form = $(this).closest('form')
+            event.preventDefault();
+            swal({
+                    title: 'Are you sure?',
+                    // text: 'Once deleted, you will not be able to recover this imaginary file!',
+                    text: 'Once deleted, you will not be able to recover this imaginary file! ' + username +
+                        ' ',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+
+                    if (willDelete) {
+                        form.submit();
+                        // window.location = '/user/' + userid + ''
+                        //     swal('Poof! Your imaginary file has been deleted!', {
+                        //         icon: 'success',
+                        //     });
+                        // } else {
+                        //     swal('Your imaginary file is safe!');
+                    }
+                });
+        });
+    </script>
+
+
     {{-- <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
         integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script> --}}
     {{-- Sweetalert Konfirmasi Delete --}}
@@ -227,6 +280,7 @@
             })
         })
     </script> --}}
+
 @endsection
 
 @push('scripts')

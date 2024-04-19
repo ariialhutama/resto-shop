@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>@yield('title') &mdash; Stisla</title>
+    <title>@yield('title') &mdash; Apotek</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('library/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -71,6 +71,11 @@
 
 
 
+    <!-- JS Libraies -->
+    <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
+
+    <!-- Page Specific JS File -->
+    <script src="{{ asset('js/page/modules-sweetalert.js') }}"></script>
 
 
     {{-- sweetalert Success or failed --}}
@@ -93,6 +98,23 @@
                 timer: 2000
             });
         @endif
+    </script>
+
+    {{-- Preview Image --}}
+    <script>
+        function previewImage() {
+            const image = document.querySelector('#image')
+            const imgPreview = document.querySelector('.img-preview')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
     </script>
 </body>
 
